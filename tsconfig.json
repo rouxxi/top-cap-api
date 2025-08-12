@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "ES2020",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "rootDir": ".",
+        "allowArbitraryExtensions": true,
+        "forceConsistentCasingInFileNames": true,
+        "rewriteRelativeImportExtensions": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+
+}
