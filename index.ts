@@ -9,7 +9,7 @@ import {currentGame} from "./src/domain/usecases/currentGame.ts";
 import { ENV } from './config.ts';
 
 const app = express();
-const port = ENV.API_PORT;
+const port = 4201 // ENV.API_PORT;
 
 app.use(cors())
 app.use(bodyParser.json());
@@ -18,20 +18,20 @@ app.get('/games', async (req, res) => {
     try {
         const { id } = req.query
         if (!id) {
-            res.status(400).send("No ID sended")
+            res.status(400).json("No ID sended")
             return;
         }
         // @ts-ignore
         const data = await currentGame(id);
         if (!data) {
-            res.status(404).send('Not found')
+            res.status(404).json('Not found')
             return;
         }
          res.setHeader('Content-Type', 'application/json');
          res.status(200).json(data);
          return;
     } catch (error) {
-        res.status(500).send( error.message);
+        res.status(500).json( error.message);
     }
 });
 
@@ -41,10 +41,10 @@ app.post('/games', async (req, res) => {
         const payload = req.body;
         if (payload) {
             const game = await createNewGame(payload);
-            res.status(201).send(JSON.stringify(game));
+            res.status(201).json(JSON.stringify(game));
             return;
         } else {
-            res.status(400).send('Not Created');
+            res.status(400).json('Not Created');
             return;
         }
     } catch (error) {
@@ -58,12 +58,12 @@ app.put('/games', async (req, res) => {
         const payload = req.body;
         if (payload) {
             const game = await gameRepository.update(payload);
-            res.status(204).send(game);
+            res.status(204).json(game);
         } else {
-            res.status(404).send('NotFound');
+            res.status(404).json('NotFound');
         }
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json(error.message);
     }
 });
 
@@ -72,12 +72,12 @@ app.put('/pawns', async (req, res) => {
         const payload = req.body;
         if (payload) {
             const pawn = await pawnsRepository.update(payload);
-            res.status(204).send(pawn);
+            res.status(204).json(pawn);
         } else {
-            res.status(404).send('NotFound');
+            res.status(404).json('NotFound');
         }
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json(error.message);
     }
 });
 
@@ -86,12 +86,12 @@ app.put('/teams', async (req, res) => {
         const payload = req.body;
         if (payload) {
             const pawn = await teamsRepository.update(payload);
-            res.status(204).send(pawn);
+            res.status(204).json(pawn);
         } else {
-            res.status(404).send('NotFound');
+            res.status(404).json('NotFound');
         }
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json(error.message);
     }
 });
 
