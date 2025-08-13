@@ -25,8 +25,9 @@ async function getById (id: number) {
     return data;
 }
 
-async function update (fieds: Team ) {
-    const {id, ...others} = fieds
+async function update (fields: Team ) {
+    const {id, ...others} = fields
+    console.log('field to update', fields)
     const db = await DatabaseService.connect();
     const { data, error } = await db
         .from('teams')

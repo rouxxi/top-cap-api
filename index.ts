@@ -9,29 +9,34 @@ import {currentGame} from "./src/domain/usecases/currentGame.ts";
 import { ENV } from './config.ts';
 
 const app = express();
-const port = 4201 // ENV.API_PORT;
+const port = ENV.API_PORT;
+const whiteList = ['https://topcapwebapp-4d789jve.b4a.run', 'http://localhost:5173', 'https://top-cap.netlify.app' ];
+app.use(cors({
+    methods: ['GET', 'PUT', 'POST'],
+    allowedHeaders: ['Content-Type', 'Accept', "Access-Control-Allow-Origin"],
+    origin: whiteList,
+}))
 
-app.use(cors())
 app.use(bodyParser.json());
 
 app.get('/games', async (req, res) => {
     try {
         const { id } = req.query
         if (!id) {
-            res.status(400).json("No ID sended")
+            res.status(400).json({ message:"No ID sended"})
             return;
         }
         // @ts-ignore
         const data = await currentGame(id);
         if (!data) {
-            res.status(404).json('Not found')
+            res.status(404).json({ message:'Not found'})
             return;
         }
          res.setHeader('Content-Type', 'application/json');
          res.status(200).json(data);
          return;
     } catch (error) {
-        res.status(500).json( error.message);
+        res.status(500).json( error);
     }
 });
 
@@ -40,11 +45,11 @@ app.post('/games', async (req, res) => {
     try {
         const payload = req.body;
         if (payload) {
-            const game = await createNewGame(payload);
-            res.status(201).json(JSON.stringify(game));
+            const gameId = await createNewGame(payload);
+            res.status(201).json({id: gameId});
             return;
         } else {
-            res.status(400).json('Not Created');
+            res.status(400).json({ message:'Not Created'});
             return;
         }
     } catch (error) {
@@ -58,12 +63,12 @@ app.put('/games', async (req, res) => {
         const payload = req.body;
         if (payload) {
             const game = await gameRepository.update(payload);
-            res.status(204).json(game);
+            res.status(200).json(game);
         } else {
-            res.status(404).json('NotFound');
+            res.status(404).json({ message:'NotFound'});
         }
     } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
     }
 });
 
@@ -72,12 +77,12 @@ app.put('/pawns', async (req, res) => {
         const payload = req.body;
         if (payload) {
             const pawn = await pawnsRepository.update(payload);
-            res.status(204).json(pawn);
+            res.status(200).json(pawn);
         } else {
-            res.status(404).json('NotFound');
+            res.status(404).json({ message:'NotFound'});
         }
     } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
     }
 });
 
@@ -85,13 +90,13 @@ app.put('/teams', async (req, res) => {
     try {
         const payload = req.body;
         if (payload) {
-            const pawn = await teamsRepository.update(payload);
-            res.status(204).json(pawn);
+            const team = await teamsRepository.update(payload);
+            res.status(200).json(team);
         } else {
-            res.status(404).json('NotFound');
+            res.status(404).json({ message:'NotFound'});
         }
     } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
     }
 });
 
