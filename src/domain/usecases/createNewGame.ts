@@ -7,6 +7,7 @@ import {getPreset} from "../../utils/gridGenerator.ts";
 interface CreateGameBody {
     preset:number;
     game_mod: string;
+    status?: string;
     teams: {
         name: string,
         pawns_skin:string
@@ -17,7 +18,7 @@ export async function createNewGame(bodyRequest: CreateGameBody) {
     const preset = getPreset(bodyRequest.preset);
 
     const [game] = await gameRepository.create({
-        status: 'created',
+        status: bodyRequest.status || 'created',
         game_mod: bodyRequest.game_mod,
         grid: preset.grid
     })
