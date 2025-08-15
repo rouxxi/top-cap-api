@@ -36,7 +36,7 @@ export async function createNewGame(bodyRequest: CreateGameBody) {
 
         await kingRepository.create({
             position_x: preset.teams[index].kingPosition[0],
-            position_y: preset.teams[index].kingPosition[0],
+            position_y: preset.teams[index].kingPosition[1],
             team_id: teamCreated.id,
             game_id: game.id,
         })
