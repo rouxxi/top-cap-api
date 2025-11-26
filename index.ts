@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from "body-parser";
-import * as gameRepository from "./src/repository/games.ts";
-import * as pawnsRepository from './src/repository/pawns.ts';
-import * as teamsRepository from './src/repository/teams.ts';
+import * as gameRepository from "./src/infrastructure/repository/games.ts";
+import * as pawnsRepository from './src/infrastructure/repository/pawns.ts';
+import * as teamsRepository from './src/infrastructure/repository/teams.ts';
 import {createNewGame} from "./src/domain/usecases/createNewGame.ts";
 import {currentGame} from "./src/domain/usecases/currentGame.ts";
 import { ENV } from './config.ts';

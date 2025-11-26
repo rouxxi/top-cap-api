@@ -1,19 +1,18 @@
-import {DatabaseService} from '../services/database.ts';
+import {DatabaseService} from '../../services/database.ts';
 
-interface Team {
+interface Kings {
     id?: number;
-    name: string;
-    selected?: boolean;
-    pawns_skin: string;
-    game_id: string;
-    user_id: string | null;
+    position_x?: number;
+    position_y?: number;
+    team_id?: number;
+    game_id?: number;
     created_at?: Date | null;
 }
 
 async function getById (id: number) {
     const db = await DatabaseService.connect();
     let { data, error } = await db
-        .from('teams')
+        .from('kings')
         .select('*')
         .eq('id', id)
 
@@ -25,12 +24,11 @@ async function getById (id: number) {
     return data;
 }
 
-async function update (fields: Team ) {
+async function update (fields: Kings ) {
     const {id, ...others} = fields
-    console.log('field to update', fields)
     const db = await DatabaseService.connect();
     const { data, error } = await db
-        .from('teams')
+        .from('kings')
         .update({ ...others })
         .eq('id', id)
         .select('*');
@@ -43,11 +41,11 @@ async function update (fields: Team ) {
     return data;
 }
 
-async function create (fieds: Team ) {
+async function create (fields: Kings ) {
     const db = await DatabaseService.connect();
     const { data, error } = await db
-        .from('teams')
-        .insert({...fieds})
+        .from('kings')
+        .insert({...fields})
         .select()
 
     if( error) {
@@ -61,7 +59,7 @@ async function create (fieds: Team ) {
 async function deleteFromId (id: number ) {
     const db = await DatabaseService.connect();
     const { data, error } = await db
-        .from('teams')
+        .from('kings')
         .delete()
         .eq('id', id);
 

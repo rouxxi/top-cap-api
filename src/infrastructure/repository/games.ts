@@ -1,4 +1,4 @@
-import {DatabaseService} from '../services/database.ts';
+import {DatabaseService} from '../../services/database.ts';
 
 interface CurrentGame {
     id: string;

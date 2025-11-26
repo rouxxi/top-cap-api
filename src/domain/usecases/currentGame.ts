@@ -1,4 +1,4 @@
-import * as gameRepository from "../../repository/games.ts";
+import * as gameRepository from "../../infrastructure/repository/games.ts";
 
 interface CreateGameBody {
     preset:number;

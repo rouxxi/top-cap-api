@@ -1,7 +1,7 @@
-import * as teamsRepository from "../../repository/teams.ts";
-import * as gameRepository from "../../repository/games.ts";
-import * as  kingRepository from "../../repository/kings.ts";
-import * as pawnRepository from "../../repository/pawns.ts";
+import * as teamsRepository from "../../infrastructure/repository/teams.ts";
+import * as gameRepository from "../../infrastructure/repository/games.ts";
+import * as  kingRepository from "../../infrastructure/repository/kings.ts";
+import * as pawnRepository from "../../infrastructure/repository/pawns.ts";
 import {getPreset} from "../../utils/gridGenerator.ts";
 
 interface CreateGameBody {
